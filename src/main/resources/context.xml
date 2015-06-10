@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:c="http://www.springframework.org/schema/c"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:jee="http://www.springframework.org/schema/jee"
+       xmlns:jms="http://www.springframework.org/schema/jms"
+
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+          http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd
+          http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.2.xsd
+          http://www.springframework.org/schema/jms http://www.springframework.org/schema/jms/spring-jms-3.2.xsd
+">
+    
+    <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+        <!--    didn't figure out why but the mail is being sent even without username and password     -->
+        <!--    without 'from' property get om.sun.mail.smtp.SMTPAddressFailedException: 450 4.1.8 
+                Pozitron@MainFrame: Sender address rejected: Domain not found                           -->
+        <!--    without host get java.net.ConnectException: Connection refused: connect                 -->
+        <property name="host" value="smtp.gmail.com"/>
+        <property name="username" value="pmpozitron@gmail.com"/>
+        <property name="password" value="123"/>
+    </bean>
+    <!-- this is a template message that we can pre-load with default state -->
+    <bean id="template" class="org.springframework.mail.SimpleMailMessage">
+        <property name="from" value="pmpozitron@gmail.com"/>        
+        <property name="subject" value="Order"/>
+    </bean>
+
+</beans>
